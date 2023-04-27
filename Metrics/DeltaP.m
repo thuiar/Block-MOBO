@@ -1,11 +1,12 @@
-function Score = Spread(PopObj,PF)
+function Score = DeltaP(PopObj,PF)
 % <metric> <min>
-% Spread
+% Averaged Hausdorff distance
 
 %------------------------------- Reference --------------------------------
-% Y. Wang, L. Wu, and X. Yuan, Multi-objective self-adaptive differential
-% evolution with elitist archive and crowding entropy-based diversity
-% measure, Soft Computing, 2010, 14(3): 193-209.
+% O. Schutze, X. Esquivel, A. Lara, and C. A. Coello Coello, Using the
+% averaged Hausdorff distance as a performance measure in evolutionary
+% multiobjective optimization, IEEE Transactions on Evolutionary
+% Computation, 2012, 16(4): 504-522.
 %------------------------------- Copyright --------------------------------
 % Copyright (c) 2018-2019 BIMK Group. You are free to use the PlatEMO for
 % research purposes. All publications which use this platform or any code
@@ -15,11 +16,7 @@ function Score = Spread(PopObj,PF)
 % Computational Intelligence Magazine, 2017, 12(4): 73-87".
 %--------------------------------------------------------------------------
 
-    Dis1  = pdist2(PopObj,PopObj);
-    Dis1(logical(eye(size(Dis1,1)))) = inf;
-    [~,E] = max(PF,[],1);Draw(PF(E,:),'*b');PF(E,:)
-    Dis2  = pdist2(PF(E,:),PopObj);
-    d1    = sum(min(Dis2,[],2));
-    d2    = mean(min(Dis1,[],2));
-    Score = (d1+sum(abs(min(Dis1,[],2)-d2))) / (d1+(size(PopObj,1)-size(PopObj,2))*d2);
+    IGDp  = mean(min(pdist2(PF,PopObj),[],2));
+    GDp   = mean(min(pdist2(PopObj,PF),[],2));
+    Score = max(IGDp,GDp);
 end
