@@ -1,6 +1,6 @@
-function CCRParEGO(Global)
-% <algorithm> <C>
-% ParEGO with Combined Coordinates Rotation (CCR) Optimization
+function BlockParEGO(Global)
+% <algorithm> <B>
+% ParEGO with Block Coordinate Update
 % IFEs --- 10000 --- Internal GA evals per iteration
 % d --- 5 --- The number of sub-dimensions to optimize at each iteration
 
